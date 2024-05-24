@@ -1,25 +1,15 @@
 import React, { useState } from 'react';
 
 const FileUpload = () => {
-  const success= (event) => {
-    alert('Image uploaded!');
-  }
-  const [file, setFile] = useState(null);
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-
+  const uploadImage = async (event) => {
+    let fileHandle;
+    [fileHandle] = await window.showOpenFilePicker();
+    const formData=fileHandle.body;
+    
     try {
-      const response = await fetch('http://localhost:5000/upload', {
-        method: 'POST',
+      const response = await fetch('https://0au73exycb.execute-api.us-east-2.amazonaws.com/v3_image/images-upload?image_name=Desert.jpg', {
+        method: 'PUT',
         body: formData,
       });
       if (response.ok) {
@@ -34,10 +24,7 @@ const FileUpload = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleFileChange} />
-        <button type="submit" onClick={success}>Upload</button>
-      </form>
+        <button type="submit" onClick={uploadImage}>Upload</button>
     </div>
   );
 };
