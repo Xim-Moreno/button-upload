@@ -6,9 +6,9 @@ const FileUpload = () => {
     let fileHandle;
     [fileHandle] = await window.showOpenFilePicker();
     const formData=fileHandle.body;
-    
+    const formName=fileHandle.name;
     try {
-      const response = await fetch('https://0au73exycb.execute-api.us-east-2.amazonaws.com/v3_image/images-upload?image_name=Desert.jpg', {
+      const response = await fetch('https://0au73exycb.execute-api.us-east-2.amazonaws.com/v3_image/images-upload?image_name='+formName, {
         method: 'PUT',
         body: formData,
       });
